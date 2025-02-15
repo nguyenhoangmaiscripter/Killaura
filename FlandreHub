@@ -1,0 +1,110 @@
+-- Đây là một script Lua để tạo một GUI nhỏ hơn tên Flandre Hub Kill Aura với nút toggle bật/tắt script có animation giống như switch tròn và có thể kéo thả
+
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "FlandreHubKillAura"
+screenGui.ResetOnSpawn = false -- Giữ GUI sau khi nhân vật chết
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+local background = Instance.new("Frame")
+background.Size = UDim2.new(0, 200, 0, 120) -- Tăng chiều cao để chứa nút X
+background.Position = UDim2.new(0.5, -100, 0.5, -60)
+background.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+background.BorderSizePixel = 2
+background.Active = true
+background.Draggable = true
+background.Selectable = true
+background.Parent = screenGui
+
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0, 20, 0, 20)
+closeButton.Position = UDim2.new(1, -25, 0, 5)
+closeButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+closeButton.Text = "X"
+closeButton.TextSize = 14
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeButton.Parent = background
+closeButton.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
+end)
+
+local innerBackground = Instance.new("Frame")
+innerBackground.Size = UDim2.new(0.9, 0, 0.75, 0) -- Điều chỉnh chiều cao để không che nút X
+innerBackground.Position = UDim2.new(0.05, 0, 0.2, 0)
+innerBackground.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+innerBackground.BorderSizePixel = 1
+innerBackground.Parent = background
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0.3, 0)
+title.Text = "Flandre Hub Kill Aura"
+title.TextSize = 14
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.BackgroundTransparency = 1
+title.Parent = innerBackground
+
+local subtitle = Instance.new("TextLabel")
+subtitle.Size = UDim2.new(1, 0, 0.2, 0)
+subtitle.Position = UDim2.new(0, 0, 0.3, 0)
+subtitle.Text = "Script by 54hz"
+subtitle.TextSize = 10
+subtitle.TextColor3 = Color3.fromRGB(200, 200, 200)
+subtitle.BackgroundTransparency = 1
+subtitle.Parent = innerBackground
+
+local toggleButton = Instance.new("TextButton")
+toggleButton.Size = UDim2.new(0, 50, 0, 24)
+toggleButton.Position = UDim2.new(0.5, -25, 0.6, 0)
+toggleButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+toggleButton.Text = ""
+toggleButton.BorderSizePixel = 0
+toggleButton.Parent = innerBackground
+toggleButton.AutoButtonColor = false
+toggleButton.ClipsDescendants = true
+
+local toggleUICorner = Instance.new("UICorner")
+toggleUICorner.CornerRadius = UDim.new(1, 0)
+toggleUICorner.Parent = toggleButton
+
+local toggleCircle = Instance.new("Frame")
+toggleCircle.Size = UDim2.new(0, 22, 0, 22)
+toggleCircle.Position = UDim2.new(0, 2, 0, 1)
+toggleCircle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+toggleCircle.BorderSizePixel = 0
+toggleCircle.Parent = toggleButton
+
+local circleUICorner = Instance.new("UICorner")
+circleUICorner.CornerRadius = UDim.new(1, 0)
+circleUICorner.Parent = toggleCircle
+
+local isEnabled = false
+
+local function toggleScript()
+    isEnabled = not isEnabled
+    if isEnabled then
+        toggleCircle:TweenPosition(UDim2.new(1, -24, 0, 1), "Out", "Quad", 0.2, true)
+        toggleButton.BackgroundColor3 = Color3.fromRGB(0, 200, 0)
+        getgenv().G = true
+        getgenv().Creator = 'https://discord.gg/B3HqPPzFYr - HalloweenGaster'
+        spawn(function()
+            while getgenv().G and getgenv().Creator == 'https://discord.gg/B3HqPPzFYr - HalloweenGaster' do
+                wait(1)
+                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 112412400000)
+                sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 112412400000)
+                for _, d in pairs(game.Workspace:GetDescendants()) do
+                    if d:IsA("Humanoid") and d.Parent.Name ~= game.Players.LocalPlayer.Name then
+                        d.Health = 0
+                    end
+                end
+            end
+        end)
+    else
+        toggleCircle:TweenPosition(UDim2.new(0, 2, 0, 1), "Out", "Quad", 0.2, true)
+        toggleButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+        getgenv().G = false
+    end
+end
+
+toggleButton.MouseButton1Click:Connect(toggleScript)
