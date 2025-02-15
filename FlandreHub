@@ -5,12 +5,11 @@ local RunService = game:GetService("RunService")
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "FlandreHubKillAura"
-screenGui.ResetOnSpawn = false -- Giữ GUI sau khi nhân vật chết
 screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 local background = Instance.new("Frame")
-background.Size = UDim2.new(0, 200, 0, 120) -- Tăng chiều cao để chứa nút X
-background.Position = UDim2.new(0.5, -100, 0.5, -60)
+background.Size = UDim2.new(0, 200, 0, 100)
+background.Position = UDim2.new(0.5, -100, 0.5, -50)
 background.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 background.BorderSizePixel = 2
 background.Active = true
@@ -18,24 +17,20 @@ background.Draggable = true
 background.Selectable = true
 background.Parent = screenGui
 
-local closeButton = Instance.new("TextButton")
-closeButton.Size = UDim2.new(0, 20, 0, 20)
-closeButton.Position = UDim2.new(1, -25, 0, 5)
-closeButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-closeButton.Text = "X"
-closeButton.TextSize = 14
-closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-closeButton.Parent = background
-closeButton.MouseButton1Click:Connect(function()
-    screenGui:Destroy()
-end)
+local UICornerFrame = Instance.new("UICorner")
+UICornerFrame.CornerRadius = UDim.new(0, 12)
+UICornerFrame.Parent = background
 
 local innerBackground = Instance.new("Frame")
-innerBackground.Size = UDim2.new(0.9, 0, 0.75, 0) -- Điều chỉnh chiều cao để không che nút X
-innerBackground.Position = UDim2.new(0.05, 0, 0.2, 0)
+innerBackground.Size = UDim2.new(0.9, 0, 0.8, 0)
+innerBackground.Position = UDim2.new(0.05, 0, 0.1, 0)
 innerBackground.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
 innerBackground.BorderSizePixel = 1
 innerBackground.Parent = background
+
+local UICornerFrame = Instance.new("UICorner")
+UICornerFrame.CornerRadius = UDim.new(0, 12)
+UICornerFrame.Parent = innerBackground
 
 local title = Instance.new("TextLabel")
 title.Size = UDim2.new(1, 0, 0.3, 0)
@@ -62,11 +57,12 @@ toggleButton.Text = ""
 toggleButton.BorderSizePixel = 0
 toggleButton.Parent = innerBackground
 toggleButton.AutoButtonColor = false
-toggleButton.ClipsDescendants = true
 
-local toggleUICorner = Instance.new("UICorner")
-toggleUICorner.CornerRadius = UDim.new(1, 0)
-toggleUICorner.Parent = toggleButton
+local UICornerFrame = Instance.new("UICorner")
+UICornerFrame.CornerRadius = UDim.new(0, 12)
+UICornerFrame.Parent = toggleButton
+
+toggleButton.ClipsDescendants = true
 
 local toggleCircle = Instance.new("Frame")
 toggleCircle.Size = UDim2.new(0, 22, 0, 22)
